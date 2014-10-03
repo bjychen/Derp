@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Derp:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="customer-support-3.0.0.SNAPSHOT.war">
+      <element id="artifact" artifact-name="Derp:war exploded" />
+    </root>
+  </artifact>
+</component>
