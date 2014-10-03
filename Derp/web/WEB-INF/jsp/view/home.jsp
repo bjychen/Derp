@@ -11,10 +11,10 @@
     <title>Derp Home</title>
 </head>
 <body>
-    <a href="<c:url value="/login?logout" />">Login</a>
+    <a href="<c:url value="/login?logout" />"><font size="20">Login</font></a>
     <br>
-    <a href="<c:url value="#" />">Find Friends</a>
+    <a href="<c:url value="#" />"><font size="20">Find Friends</font></a>
     <br>
-    <a href="<c:url value="#" />">+</a>
+    <a href="<c:url value="#" />"><font size="20">+</font></a>
 </body>
 </html>

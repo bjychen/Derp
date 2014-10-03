@@ -33,7 +33,7 @@ public class TicketServlet extends HttpServlet
     {
         if(request.getSession().getAttribute("username") == null)
         {
-            response.sendRedirect("login");
+            response.sendRedirect("home");
             return;
         }
 
