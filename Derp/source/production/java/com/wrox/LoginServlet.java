@@ -21,6 +21,7 @@ public class LoginServlet extends HttpServlet
     static {
         userDatabase.put("Bernice", "password");
         userDatabase.put("Gon", "password");
+        userDatabase.put("gon", "gon");
     }
 
     @Override
@@ -50,6 +51,12 @@ public class LoginServlet extends HttpServlet
             throws ServletException, IOException
     {
         HttpSession session = request.getSession();
+        if(session.getAttribute("cancel") != null)
+        {
+            response.sendRedirect("home");
+            return;
+        }
+
         if(session.getAttribute("username") != null)
         {
             response.sendRedirect("tickets");

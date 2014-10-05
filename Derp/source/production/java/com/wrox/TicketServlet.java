@@ -49,10 +49,11 @@ public class TicketServlet extends HttpServlet
                 //this.showTicketForm(request, response);
                 try {
                     SimpleEmail email = new SimpleEmail();
-                    email.setHostName("smtp.googlemail.com");
-                    email.setSmtpPort(465);
+                    email.setDebug(true);
+                    email.setHostName("localhost");
+                    email.setSmtpPort(2525);
                     //email.setAuthenticator(new DefaultAuthenticator("Bernice", "password"));
-                    email.setSSLOnConnect(true);
+                    email.setSSLOnConnect(false);
                     email.setFrom("marroquincraig@gmail.com");
                     email.setSubject("TestMail");
                     email.setMsg("This is a test mail ... :-)");

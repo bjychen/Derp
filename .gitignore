@@ -1,2 +1,6 @@
 *.class
 Derp/target/*
+*.class
+*.class
+Derp/target/classes/com/wrox/HomeServlet.class
+*.class
