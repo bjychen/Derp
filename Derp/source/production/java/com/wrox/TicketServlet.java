@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import org.apache.commons.mail.*;
+import javax.mail.internet.AddressException;
+
 
 @WebServlet(
         name = "ticketServlet",
@@ -43,7 +46,24 @@ public class TicketServlet extends HttpServlet
         switch(action)
         {
             case "create":
-                this.showTicketForm(request, response);
+                //this.showTicketForm(request, response);
+                try {
+                    SimpleEmail email = new SimpleEmail();
+                    email.setHostName("smtp.googlemail.com");
+                    email.setSmtpPort(465);
+                    //email.setAuthenticator(new DefaultAuthenticator("Bernice", "password"));
+                    email.setSSLOnConnect(true);
+                    email.setFrom("marroquincraig@gmail.com");
+                    email.setSubject("TestMail");
+                    email.setMsg("This is a test mail ... :-)");
+                    email.addTo("bjychen10@gmail.com");
+                    email.send();
+                }
+                catch (Exception e) {
+                    System.out.println(e);
+                }
+
+
                 break;
             case "view":
                 this.viewTicket(request, response);
