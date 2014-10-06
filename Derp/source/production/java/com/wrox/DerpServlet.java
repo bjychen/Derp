@@ -14,8 +14,7 @@ import org.apache.commons.mail.*;
 
 @WebServlet(
         name = "derpServlet",
-        urlPatterns = {"/derp"},
-        loadOnStartup = 1
+        urlPatterns = {"/derp"}
 )
 @MultipartConfig(
         fileSizeThreshold = 5_242_880, //5MB
@@ -39,12 +38,6 @@ public class DerpServlet extends HttpServlet
             response.sendRedirect("home");
             return;
         }
-
-        /**if (request.getParameter("add") != null ||
-                request.getAttribute("delete") != null) {
-            response.sendRedirect("derp");
-            return;
-        }**/
 
         session.setAttribute("friends", this.currentUserFriends);
 

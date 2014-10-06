@@ -17,7 +17,7 @@
         <input type="email" name="email" /><br /><br />
         <input type="submit" value="Invite" /><br /><br />
     </form>
-    <form method="POST" action="<c:url value="/derp" />">
+    <form method="POST" action="<c:url value="/invite" />">
         <input type="submit" value="Cancel" /><br>
     </form>
 </body>

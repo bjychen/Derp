@@ -19,7 +19,7 @@
         <input type="password" name="password" /><br /><br />
         <input type="submit" value="Sign Up" /><br /><br />
     </form>
-    <form method="POST" action="<c:url value="/home" />">
+    <form method="POST" action="<c:url value="/signup" />">
         <input type="submit" value="Cancel" /><br>
     </form>
 </body>

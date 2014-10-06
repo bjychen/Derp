@@ -22,7 +22,7 @@
             <input type="password" name="password" /><br /><br />
             <input type="submit" value="Log In" /><br /><br />
         </form>
-        <form method="POST" action="<c:url value="/home" />">
+        <form method="POST" action="<c:url value="/login" />">
             <input type="submit" value="Cancel" /><br>
         </form>
     </body>
