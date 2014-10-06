@@ -66,6 +66,9 @@ public class TicketServlet extends HttpServlet
 
 
                 break;
+            case "invite":
+                this.showInvite(request, response);
+                break;
             case "view":
                 this.viewTicket(request, response);
                 break;
@@ -110,6 +113,14 @@ public class TicketServlet extends HttpServlet
     {
         request.getRequestDispatcher("/WEB-INF/jsp/view/ticketForm.jsp")
                .forward(request, response);
+    }
+
+    private void showInvite(HttpServletRequest request,
+                                HttpServletResponse response)
+            throws ServletException, IOException
+    {
+        request.getRequestDispatcher("/WEB-INF/jsp/view/invite.jsp")
+                .forward(request, response);
     }
 
     private void viewTicket(HttpServletRequest request,

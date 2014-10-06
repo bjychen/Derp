@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Customer Support</title>
+        <title>Derp</title>
     </head>
     <body>
         <a href="<c:url value="/login?logout" />">Logout</a>
-        <h2>Create a Ticket</h2>
+        <h2>Click on a name to send a Derp!</h2>
         <form method="POST" action="tickets" enctype="multipart/form-data">
             <input type="hidden" name="action" value="create"/>
             Subject<br/>

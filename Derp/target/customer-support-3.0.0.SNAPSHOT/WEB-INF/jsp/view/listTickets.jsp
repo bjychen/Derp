@@ -7,18 +7,18 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Customer Support</title>
+        <title>Derp</title>
     </head>
     <body>
         <a href="<c:url value="/login?logout" />">Logout</a>
-        <h2>Tickets</h2>
+        <h2>Click on a name to send a Derp!</h2>
         <a href="<c:url value="/tickets">
             <c:param name="action" value="create" />
-        </c:url>">Create Ticket</a><br /><br />
+        </c:url>">Bernice</a><br /><br />
         <%
             if(ticketDatabase.size() == 0)
             {
-                %><i>There are no tickets in the system.</i><%
+                %><i>This is where the usernames will be.</i><%
             }
             else
             {
@@ -34,5 +34,10 @@
                 }
             }
         %>
+
+        <br>
+        <a href="<c:url value="/invite">
+            <c:param name="action" value="invite" />
+        </c:url>">Invite</a><br /><br />
     </body>
 </html>

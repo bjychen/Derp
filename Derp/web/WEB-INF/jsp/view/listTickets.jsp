@@ -34,5 +34,10 @@
                 }
             }
         %>
+
+        <br>
+        <a href="<c:url value="/invite">
+            <c:param name="action" value="invite" />
+        </c:url>">Invite</a><br /><br />
     </body>
 </html>
