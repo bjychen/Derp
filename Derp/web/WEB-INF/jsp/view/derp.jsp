@@ -12,9 +12,9 @@
     <title>DERP Main Page</title>
 </head>
 <body>
-    <a href="<c:url value="#" />">Add Friend</a><br>
+    <a href="<c:url value="/addUser" />">Add Friend</a><br>
     <a href="<c:url value="#" />">Delete Friends</a><br>
-    <a href="<c:url value="#" />">Invite Friends</a><br>
+    <a href="<c:url value="/invite" />">Invite Friends</a><br>
     <a href="<c:url value="/derp?logout" />">Logout</a>
 </body>
 </html>

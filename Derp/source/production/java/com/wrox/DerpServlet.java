@@ -43,6 +43,7 @@ public class DerpServlet extends HttpServlet
         if (request.getParameter("add") != null ||
                 request.getAttribute("delete") != null) {
             response.sendRedirect("derp");
+            return;
         }
 
         request.getRequestDispatcher("/WEB-INF/jsp/view/derp.jsp")
