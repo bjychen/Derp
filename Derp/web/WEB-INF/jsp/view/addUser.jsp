@@ -11,7 +11,7 @@
     <title>Add User</title>
 </head>
 <body>
-    <form method="POST" action="<c:url value="/addUser" />">
+    <form method="POST" action="<c:url value="/derp" />">
         Username: <br />
         <input type="text" name="username" /><br /><br />
         <input type="submit" value="Add" /><br /><br />
