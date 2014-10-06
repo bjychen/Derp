@@ -4,6 +4,8 @@ package com.wrox;
  * Created by Bernice Chen on 10/5/2014.
  */
 
+import org.apache.commons.mail.SimpleEmail;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -42,25 +44,31 @@ public class InviteServlet extends HttpServlet {
             return;
         }
 
-        if(session.getAttribute("username") != null)
-        {
-            response.sendRedirect("tickets");
-            return;
-        }
-
         String emailAddress = request.getParameter("email");
-        if(emailAddress == null )
+        if(emailAddress != null )
         {
-            /*
-            request.setAttribute("loginFailed", true);
-            request.getRequestDispatcher("/WEB-INF/jsp/view/login.jsp")
-                    .forward(request, response);
-                    */
+            String username = session.getAttribute("username").toString();
+
+            try {
+                SimpleEmail email = new SimpleEmail();
+                email.setDebug(true);
+                email.setHostName("localhost");
+                email.setSmtpPort(2525);
+                email.setSSLOnConnect(false);
+                email.setFrom("Derp@DerpApp.com");
+                email.setSubject("Join Derp!");
+                email.setMsg(username + " would like to send you a Derp! Join Derp today!");
+                email.addTo(emailAddress);
+                email.send();
+                response.sendRedirect("tickets");
+            }
+            catch (Exception e) {
+                System.out.println(e);
+            }
+
         }
         else
         {
-            //session.setAttribute("username", username);
-            //request.changeSessionId();
             response.sendRedirect("tickets");
         }
     }

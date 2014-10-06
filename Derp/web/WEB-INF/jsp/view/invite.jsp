@@ -14,7 +14,7 @@
 <body>
     <form method="POST" action="<c:url value="/invite" />">
         Email: <br />
-        <input type="text" name="email" /><br /><br />
+        <input type="email" name="email" /><br /><br />
         <input type="submit" value="Invite" /><br /><br />
     </form>
     <form method="POST" action="<c:url value="/home" />">
