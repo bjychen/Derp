@@ -55,7 +55,7 @@ public class InviteServlet extends HttpServlet {
                 email.setHostName("localhost");
                 email.setSmtpPort(2525);
                 email.setSSLOnConnect(false);
-                email.setFrom("Derp@DerpApp.com");
+                email.setFrom("donotreply@derp.com");
                 email.setSubject("Join Derp!");
                 email.setMsg(username + " would like to send you a Derp! Join Derp today!");
                 email.addTo(emailAddress);

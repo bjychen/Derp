@@ -25,8 +25,8 @@ import org.apache.commons.mail.*;
 public class DerpServlet extends HttpServlet
 {
 
-    private volatile int USER_ID_SEQUENCE = 1;
-    private Map<Integer, User> userDatabase = new LinkedHashMap<>();
+    private volatile int USER_ID_SEQUENCE = 0;
+    private Map<Integer, User> currentUserFriends = new LinkedHashMap<>();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -40,10 +40,13 @@ public class DerpServlet extends HttpServlet
             return;
         }
 
-        if (request.getParameter("add") != null ||
+        /**if (request.getParameter("add") != null ||
                 request.getAttribute("delete") != null) {
             response.sendRedirect("derp");
-        }
+            return;
+        }**/
+
+        session.setAttribute("friends", this.currentUserFriends);
 
         request.getRequestDispatcher("/WEB-INF/jsp/view/derp.jsp")
                 .forward(request, response);
@@ -54,7 +57,16 @@ public class DerpServlet extends HttpServlet
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
+        HttpSession session = request.getSession();
         String action = request.getParameter("action");
+        User user = new User();
+
+        int id=0;
+
+        user.setEmail(request.getParameter("email"));
+        user.setUsername(request.getParameter("username"));
+        user.setPassword(request.getParameter("password"));
+
         if(action == null)
         {
             action = "list";
@@ -62,32 +74,44 @@ public class DerpServlet extends HttpServlet
 
         switch(action)
         {
-            case "add":
-                //this.showTicketForm(request, response);
+            case "send":
                 try {
                     SimpleEmail email = new SimpleEmail();
                     email.setDebug(true);
                     email.setHostName("localhost");
                     email.setSmtpPort(2525);
-                    //email.setAuthenticator(new DefaultAuthenticator("Bernice", "password"));
                     email.setSSLOnConnect(false);
-                    email.setFrom("marroquincraig@gmail.com");
-                    email.setSubject("TestMail");
-                    email.setMsg("This is a test mail ... :-)");
-                    email.addTo("bjychen10@gmail.com");
+                    email.setFrom("yo@der.p");
+                    email.setSubject("DERP!");
+                    email.setMsg("YOU'VE BEEN DERPED! YOU'RE WELCOME! :-)");
+                    email.addTo("Gon+Bernice@gmail.com");
                     email.send();
                 }
                 catch (Exception e) {
                     System.out.println(e);
                 }
-
-
+                break;
+            case "add":
+                if (!currentUserFriends.containsValue(user)) {
+                    synchronized (this) {
+                        id = this.USER_ID_SEQUENCE++;
+                        this.currentUserFriends.put(id, user);
+                    }
+                    session.setAttribute("friends", this.currentUserFriends);
+                }
                 break;
             case "delete":
-                //this.viewTicket(request, response);
-                break;
-            case "invite":
-                //this.downloadAttachment(request, response);
+                if (currentUserFriends.containsValue(user)) {
+                    for (Map.Entry entry : currentUserFriends.entrySet()){
+                        if (entry.equals(user)){
+                            id = (int) entry.getKey();
+                        }
+                    }
+                    synchronized (this) {
+                        this.USER_ID_SEQUENCE--;
+                        this.currentUserFriends.remove(id);
+                    }
+                }
                 break;
             case "list":
             default:

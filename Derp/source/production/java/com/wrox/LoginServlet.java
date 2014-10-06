@@ -20,7 +20,7 @@ public class LoginServlet extends HttpServlet
 
     static {
         userDatabase.put("Bernice", "password");
-        userDatabase.put("Gon", "password");
+        userDatabase.put("Gonchoi", "password");
         userDatabase.put("gon", "gon");
     }
 
@@ -76,8 +76,9 @@ public class LoginServlet extends HttpServlet
         else
         {
             session.setAttribute("username", username);
+            session.setAttribute("database", userDatabase);
             request.changeSessionId();
-            response.sendRedirect("tickets");
+            response.sendRedirect("derp");
         }
     }
 }
