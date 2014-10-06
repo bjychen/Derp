@@ -19,9 +19,7 @@
         </tr>
         <tr align="center">
             <th bgcolor="#6a5acd">
-                <a href="<c:url value="/login?logout" />">
-                    <font size="20" color="#00000">LOGIN</font>
-                </a>
+                <a href="<c:url value="/login?logout" />"><font size="20" color="#00000">LOGIN</font></a>
             </th>
         </tr>
         <tr align="center">

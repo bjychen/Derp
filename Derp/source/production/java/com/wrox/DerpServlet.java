@@ -25,7 +25,7 @@ import org.apache.commons.mail.*;
 public class DerpServlet extends HttpServlet
 {
 
-    private volatile int USER_ID_SEQUENCE = 1;
+    private volatile int USER_ID_SEQUENCE = 0;
     private Map<Integer, User> currentUserFriends = new LinkedHashMap<>();
 
     @Override
@@ -57,7 +57,16 @@ public class DerpServlet extends HttpServlet
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
+        HttpSession session = request.getSession();
         String action = request.getParameter("action");
+        User user = new User();
+
+        int id=0;
+
+        user.setEmail(request.getParameter("email"));
+        user.setUsername(request.getParameter("username"));
+        user.setPassword(request.getParameter("password"));
+
         if(action == null)
         {
             action = "list";
@@ -80,6 +89,28 @@ public class DerpServlet extends HttpServlet
                 }
                 catch (Exception e) {
                     System.out.println(e);
+                }
+                break;
+            case "add":
+                if (!currentUserFriends.containsValue(user)) {
+                    synchronized (this) {
+                        id = this.USER_ID_SEQUENCE++;
+                        this.currentUserFriends.put(id, user);
+                    }
+                    session.setAttribute("friends", this.currentUserFriends);
+                }
+                break;
+            case "delete":
+                if (currentUserFriends.containsValue(user)) {
+                    for (Map.Entry entry : currentUserFriends.entrySet()){
+                        if (entry.equals(user)){
+                            id = (int) entry.getKey();
+                        }
+                    }
+                    synchronized (this) {
+                        this.USER_ID_SEQUENCE--;
+                        this.currentUserFriends.remove(id);
+                    }
                 }
                 break;
             case "list":

@@ -1,5 +1,7 @@
 package com.wrox;
 
+import org.apache.commons.mail.SimpleEmail;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,12 +35,28 @@ public class DeleteUserServlet extends HttpServlet
             throws ServletException, IOException
     {
         HttpSession session = request.getSession();
+        String action = request.getParameter("action");
+
         if(session.getAttribute("cancel") != null)
         {
             response.sendRedirect("derp");
             return;
         }
 
-        // Update database to delete the user to local session database for the user
+       /** if(action == null)
+        {
+            action = "list";
+        }
+
+        switch(action)
+        {
+            case "delete":
+
+                break;
+            case "list":
+            default:
+                //this.listTickets(request, response);
+                break;
+        }**/
     }
 }
