@@ -25,7 +25,11 @@
             </th>
         </tr>
         <tr align="center">
-            <th bgcolor="green"> <font size="20" color="#00000"> SIGN UP </font> </th>
+            <th bgcolor="green">
+                <a href="<c:url value="/signup" />">
+                    <font size="20" color="#00000"> SIGN UP </font>
+                </a>
+            </th>
         </tr>
     </table>
 
