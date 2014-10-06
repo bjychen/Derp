@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Hashtable;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @WebServlet(
@@ -17,6 +18,7 @@ import java.util.Map;
 public class LoginServlet extends HttpServlet
 {
     private static final Map<String, String> userDatabase = new Hashtable<>();
+    private Map<String, User> friends = new LinkedHashMap<>();
 
     static {
         userDatabase.put("Bernice", "password");
@@ -77,6 +79,7 @@ public class LoginServlet extends HttpServlet
         {
             session.setAttribute("username", username);
             session.setAttribute("database", userDatabase);
+            session.setAttribute("friends", friends);
             request.changeSessionId();
             response.sendRedirect("derp");
         }

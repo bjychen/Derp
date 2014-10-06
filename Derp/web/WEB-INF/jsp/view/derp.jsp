@@ -14,7 +14,7 @@
 <%
     String currentUser = (String) request.getAttribute("username");
     @SuppressWarnings("unchecked")
-    Map<Integer, User> friendsList = (LinkedHashMap) request.getAttribute("friends");
+    Map<Integer, User> friendsList = (LinkedHashMap) session.getAttribute("friends");
     @SuppressWarnings("unchecked")
     List<User> friends = new ArrayList<>(friendsList.values());
 %>
