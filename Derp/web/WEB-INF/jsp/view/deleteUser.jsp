@@ -11,13 +11,21 @@
     <title>Delete User</title>
 </head>
 <body>
-<form method="POST" action="<c:url value="/deleteUser" />">
-    Username: <br />
-    <input type="text" name="username" /><br /><br />
-    <input type="submit" value="Delete" /><br /><br />
-</form>
-<form method="POST" action="<c:url value="/deleteUser?cancel" />">
-    <input type="submit" value="Cancel" /><br>
-</form>
+    <%
+        if(((Boolean)request.getAttribute("deleteFailed")))
+        {
+    %>
+    <b>The user cannot be deleted. Please try again.</b><br/><br/>
+    <%
+        }
+    %>
+    <form method="POST" action="<c:url value="/deleteUser?delete" />">
+        Username: <br />
+        <input type="text" name="usernameToDelete" /><br /><br />
+        <input type="submit" value="delete" /><br /><br />
+    </form>
+    <form method="POST" action="<c:url value="/deleteUser?cancel" />">
+        <input type="submit" value="cancel" /><br>
+    </form>
 </body>
 </html>

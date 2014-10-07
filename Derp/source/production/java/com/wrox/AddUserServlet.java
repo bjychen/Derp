@@ -22,10 +22,14 @@ public class AddUserServlet extends HttpServlet
     {
         if(request.getSession().getAttribute("username") == null)
         {
+            request.setAttribute("addFailed", false);
+            request.setAttribute("addExist", false);
             response.sendRedirect("derp");
             return;
         }
 
+        request.setAttribute("addFailed", false);
+        request.setAttribute("addExist", false);
         request.getRequestDispatcher("/WEB-INF/jsp/view/addUser.jsp")
                 .forward(request, response);
     }
@@ -38,8 +42,47 @@ public class AddUserServlet extends HttpServlet
 
         if(request.getParameter("cancel") != null)
         {
+            request.setAttribute("addFailed", false);
+            request.setAttribute("addExist", false);
             response.sendRedirect("derp");
             return;
         }
+
+        /** All Unchecked warning suppress help from:
+         *  http://stackoverflow.com/questions/509076/how-do-i-address-unchecked-cast-warnings
+         **/
+        if(request.getParameter("add") != null)
+        {
+            String addUser = (String) request.getAttribute("usernameToAdd");
+            @SuppressWarnings("unchecked")
+            Map<String, String> userDB = (Map<String, String>) session.getAttribute("database");
+            @SuppressWarnings("unchecked")
+            Map<String, String> currentUserFriends = (Map<String, String>) session.getAttribute("friends");
+
+            if(userDB.containsKey(addUser)){
+                request.setAttribute("addFailed", true);
+                request.setAttribute("addExist", false);
+                response.sendRedirect("addUser");
+                return;
+            }
+            else if (currentUserFriends.containsKey(addUser)){
+                request.setAttribute("addFailed", false);
+                request.setAttribute("addExist", true);
+                response.sendRedirect("addUser");
+                return;
+            }
+            else{
+                currentUserFriends.put(addUser, userDB.get(addUser));
+                request.setAttribute("addFailed", false);
+                request.setAttribute("addExist", false);
+                response.sendRedirect("derp");
+                return;
+            }
+        }
+
+        request.setAttribute("addFailed", false);
+        request.setAttribute("addExist", false);
+        request.getRequestDispatcher("/WEB-INF/jsp/view/addUser.jsp")
+                .forward(request, response);
     }
 }

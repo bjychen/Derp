@@ -11,13 +11,29 @@
     <title>Add User</title>
 </head>
 <body>
-    <form method="POST" action="<c:url value="/derp" />">
+    <%
+        if(((Boolean)request.getAttribute("addFailed")))
+        {
+    %>
+    <b>The user does not exist. Please try a different user.</b><br/><br/>
+    <%
+        }
+    %>
+    <%
+        if(((Boolean)request.getAttribute("addExist")))
+        {
+    %>
+    <b>The user is already added. Please try a different user.</b><br/><br/>
+    <%
+        }
+    %>
+    <form method="POST" action="<c:url value="/addUser?add" />">
         Username: <br />
-        <input type="text" name="username" /><br /><br />
-        <input type="submit" value="Add" /><br /><br />
+        <input type="text" name="usernameToAdd" /><br /><br />
+        <input type="submit" value="add" /><br /><br />
     </form>
     <form method="POST" action="<c:url value="/addUser?cancel" />">
-        <input type="submit" value="Cancel" /><br>
+        <input type="submit" value="cancel" /><br>
     </form>
 </body>
 </html>

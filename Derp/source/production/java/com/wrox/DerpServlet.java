@@ -1,14 +1,11 @@
 package com.wrox;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Map;
 import org.apache.commons.mail.*;
 
@@ -25,7 +22,7 @@ public class DerpServlet extends HttpServlet
 {
 
     private volatile int USER_ID_SEQUENCE = 0;
-    private Map<Integer, User> currentUserFriends = new LinkedHashMap<>();
+    private Map<String, String> currentUserFriends = new HashMap<>();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -39,11 +36,9 @@ public class DerpServlet extends HttpServlet
             return;
         }
 
-        session.setAttribute("friends", this.currentUserFriends);
-
+        session.setAttribute("friends", (Map<String, String>) session.getAttribute("friends"));
         request.getRequestDispatcher("/WEB-INF/jsp/view/derp.jsp")
                 .forward(request, response);
-
     }
 
     @Override
@@ -51,65 +46,23 @@ public class DerpServlet extends HttpServlet
             throws ServletException, IOException
     {
         HttpSession session = request.getSession();
-        String action = request.getParameter("action");
-        User user = new User();
 
-        int id=0;
-
-        user.setEmail(request.getParameter("email"));
-        user.setUsername(request.getParameter("username"));
-        user.setPassword(request.getParameter("password"));
-
-        if(action == null)
-        {
-            action = "list";
-        }
-
-        switch(action)
-        {
-            case "send":
-                try {
-                    SimpleEmail email = new SimpleEmail();
-                    email.setDebug(true);
-                    email.setHostName("localhost");
-                    email.setSmtpPort(2525);
-                    email.setSSLOnConnect(false);
-                    email.setFrom("yo@der.p");
-                    email.setSubject("DERP!");
-                    email.setMsg("YOU'VE BEEN DERPED! YOU'RE WELCOME! :-)");
-                    email.addTo("Gon+Bernice@gmail.com");
-                    email.send();
-                }
-                catch (Exception e) {
-                    System.out.println(e);
-                }
-                break;
-            case "add":
-                if (!currentUserFriends.containsValue(user)) {
-                    synchronized (this) {
-                        id = this.USER_ID_SEQUENCE++;
-                        this.currentUserFriends.put(id, user);
-                    }
-                    session.setAttribute("friends", this.currentUserFriends);
-                }
-                break;
-            case "delete":
-                if (currentUserFriends.containsValue(user)) {
-                    for (Map.Entry entry : currentUserFriends.entrySet()){
-                        if (entry.equals(user)){
-                            id = (int) entry.getKey();
-                        }
-                    }
-                    synchronized (this) {
-                        this.USER_ID_SEQUENCE--;
-                        this.currentUserFriends.remove(id);
-                    }
-                }
-                break;
-            case "list":
-            default:
-                //this.listTickets(request, response);
-                break;
+        if(request.getParameter("send") != null) {
+            try {
+                SimpleEmail email = new SimpleEmail();
+                email.setDebug(true);
+                email.setHostName("localhost");
+                email.setSmtpPort(2525);
+                email.setSSLOnConnect(false);
+                email.setFrom((String) session.getAttribute("username"));
+                email.setSubject("DERP!");
+                email.setMsg("YOU'VE BEEN DERPED! YOU'RE WELCOME! :-)");
+                email.addTo(request.getParameterValues("send"));
+                email.send();
+            } catch (Exception e) {
+                response.sendRedirect("derp");
+                System.out.println(e);
+            }
         }
     }
 }

@@ -1,7 +1,5 @@
 package com.wrox;
 
-import org.apache.commons.mail.SimpleEmail;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Map;
 
 @WebServlet(
         name = "DeleteUserServlet",
@@ -22,10 +21,12 @@ public class DeleteUserServlet extends HttpServlet
     {
         if(request.getSession().getAttribute("username") == null)
         {
+            request.setAttribute("deleteFailed", false);
             response.sendRedirect("derp");
             return;
         }
 
+        request.setAttribute("deleteFailed", false);
         request.getRequestDispatcher("/WEB-INF/jsp/view/deleteUser.jsp")
                 .forward(request, response);
     }
@@ -35,28 +36,36 @@ public class DeleteUserServlet extends HttpServlet
             throws ServletException, IOException
     {
         HttpSession session = request.getSession();
-        String action = request.getParameter("action");
-
         if(request.getParameter("cancel") != null)
         {
+            request.setAttribute("deleteFailed", false);
             response.sendRedirect("derp");
             return;
         }
 
-       /** if(action == null)
+        if(request.getParameter("delete") != null)
         {
-            action = "list";
+            String deleteUser = (String) request.getAttribute("usernameToDelete");
+
+            @SuppressWarnings("unchecked")
+            Map<String, String> currentUserFriends = (Map<String, String>) session.getAttribute("friends");
+
+            if (currentUserFriends.containsKey(deleteUser)) {
+                currentUserFriends.remove(deleteUser);
+                session.setAttribute("friends", currentUserFriends);
+                request.setAttribute("deleteFailed", false);
+                response.sendRedirect("derp");
+                return;
+            }
+            else{
+                request.setAttribute("deleteFailed", true);
+                response.sendRedirect("deleteUser");
+                return;
+            }
         }
 
-        switch(action)
-        {
-            case "delete":
-
-                break;
-            case "list":
-            default:
-                //this.listTickets(request, response);
-                break;
-        }**/
+        request.setAttribute("deleteFailed", false);
+        request.getRequestDispatcher("/WEB-INF/jsp/view/deleteUser.jsp")
+                .forward(request, response);
     }
 }
