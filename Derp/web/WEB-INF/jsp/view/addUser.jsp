@@ -29,7 +29,7 @@
     %>
     <form method="POST" action="<c:url value="/addUser?add" />">
         Username: <br />
-        <input type="text" name="usernameToAdd" /><br /><br />
+        <input type="email" name="usernameToAdd" /><br /><br />
         <input type="submit" value="add" /><br /><br />
     </form>
     <form method="POST" action="<c:url value="/addUser?cancel" />">
