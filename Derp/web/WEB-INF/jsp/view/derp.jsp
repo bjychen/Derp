@@ -1,6 +1,4 @@
-<%@ page import="com.wrox.User" %>
 <%@ page import="java.util.Map" %>
-<%@ page import="java.util.LinkedHashMap" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
 <%--
@@ -21,7 +19,7 @@
         @SuppressWarnings("unchecked")
         Map<String, String> friendsList = (Map<String, String>) session.getAttribute("friends");
         @SuppressWarnings("unchecked")
-        List<String> friends = (List<String>) friendsList.values();
+        List<String> friends = new ArrayList<>(friendsList.values());
 
         for (String afriend : friends) { %>
     <form method="POST" action="<c:url value="/derp?send=<%=friendsList.get(afriend)%>" />">
