@@ -47,7 +47,7 @@ public class InviteServlet extends HttpServlet {
         String emailAddress = request.getParameter("email");
         if(emailAddress != null )
         {
-            String username = session.getAttribute("username").toString();
+            String username = (String) session.getAttribute("username");
 
             try {
                 SimpleEmail email = new SimpleEmail();
@@ -60,16 +60,16 @@ public class InviteServlet extends HttpServlet {
                 email.setMsg(username + " would like to send you a Derp! Join Derp today!");
                 email.addTo(emailAddress);
                 email.send();
-                response.sendRedirect("tickets");
+                response.sendRedirect("derp");
             }
             catch (Exception e) {
                 System.out.println(e);
+                response.sendRedirect("derp");
             }
-
         }
         else
         {
-            response.sendRedirect("tickets");
+            response.sendRedirect("derp");
         }
     }
 }

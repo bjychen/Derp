@@ -15,10 +15,10 @@
     <form method="POST" action="<c:url value="/invite" />">
         Email: <br />
         <input type="email" name="email" /><br /><br />
-        <input type="submit" value="Invite" /><br /><br />
+        <input type="submit" value="invite" /><br /><br />
     </form>
     <form method="POST" action="<c:url value="/invite?cancel" />">
-        <input type="submit" value="Cancel" /><br>
+        <input type="submit" value="cancel" /><br>
     </form>
 </body>
 </html>
