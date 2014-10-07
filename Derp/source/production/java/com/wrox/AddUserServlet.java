@@ -36,12 +36,10 @@ public class AddUserServlet extends HttpServlet
     {
         HttpSession session = request.getSession();
 
-        if(session.getAttribute("cancel") != null)
+        if(request.getParameter("cancel") != null)
         {
             response.sendRedirect("derp");
             return;
         }
-
-        response.sendRedirect("derp");
     }
 }

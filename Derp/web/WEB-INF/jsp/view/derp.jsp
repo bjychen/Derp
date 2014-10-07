@@ -11,20 +11,19 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%
-    String currentUser = (String) request.getAttribute("username");
-    @SuppressWarnings("unchecked")
-    Map<Integer, User> friendsList = (LinkedHashMap) session.getAttribute("friends");
-    @SuppressWarnings("unchecked")
-    List<User> friends = new ArrayList<>(friendsList.values());
-%>
 <html>
 <head>
     <title>DERP Main Page</title>
 </head>
 <body>
-    <b> Hello <%=currentUser%></b><br>
-    <% for (User afriend : friends) { %>
+    <b> Hello <%=(String) session.getAttribute("username")%></b><br>
+    <%
+        @SuppressWarnings("unchecked")
+        Map<Integer, User> friendsList = (LinkedHashMap) session.getAttribute("friends");
+        @SuppressWarnings("unchecked")
+        List<User> friends = new ArrayList<>(friendsList.values());
+
+        for (User afriend : friends) { %>
     <form method="POST" action="<c:url value="/derp?send=<%=afriend.getEmail()%>" />">
         <input type="submit" value=<%=afriend.getUsername()%> /><br>
     </form>

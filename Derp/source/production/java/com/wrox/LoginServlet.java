@@ -39,6 +39,11 @@ public class LoginServlet extends HttpServlet
             response.sendRedirect("derp");
             return;
         }
+        else if(request.getParameter("cancel") != null)
+        {
+            response.sendRedirect("home");
+            return;
+        }
 
         request.setAttribute("loginFailed", false);
         request.getRequestDispatcher("/WEB-INF/jsp/view/login.jsp")
@@ -50,7 +55,7 @@ public class LoginServlet extends HttpServlet
             throws ServletException, IOException
     {
         HttpSession session = request.getSession();
-        if(session.getAttribute("cancel") != null)
+        if(request.getParameter("cancel") != null)
         {
             response.sendRedirect("home");
             return;

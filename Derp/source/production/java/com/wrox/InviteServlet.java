@@ -38,9 +38,9 @@ public class InviteServlet extends HttpServlet {
             throws ServletException, IOException
     {
         HttpSession session = request.getSession();
-        if(session.getAttribute("cancel") != null)
+        if(request.getParameter("cancel") != null)
         {
-            response.sendRedirect("home");
+            response.sendRedirect("derp");
             return;
         }
 

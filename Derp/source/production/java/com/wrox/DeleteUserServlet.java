@@ -37,7 +37,7 @@ public class DeleteUserServlet extends HttpServlet
         HttpSession session = request.getSession();
         String action = request.getParameter("action");
 
-        if(session.getAttribute("cancel") != null)
+        if(request.getParameter("cancel") != null)
         {
             response.sendRedirect("derp");
             return;
