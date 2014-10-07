@@ -77,6 +77,7 @@ public class AddUserServlet extends HttpServlet
                     currentUserFriends.put(addUser, userDB.get(addUser));
                     request.setAttribute("addFailed", false);
                     request.setAttribute("addExist", false);
+                    session.setAttribute("friends", currentUserFriends);
                     response.sendRedirect("derp");
                     return;
                 }

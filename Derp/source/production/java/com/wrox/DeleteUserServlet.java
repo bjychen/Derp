@@ -45,7 +45,7 @@ public class DeleteUserServlet extends HttpServlet
 
         if(request.getParameter("delete") != null)
         {
-            String deleteUser = (String) request.getAttribute("usernameToDelete");
+            String deleteUser = request.getParameter("usernameToDelete");
 
             @SuppressWarnings("unchecked")
             Map<String, String> currentUserFriends = (Map<String, String>) session.getAttribute("friends");
@@ -59,7 +59,8 @@ public class DeleteUserServlet extends HttpServlet
             }
             else{
                 request.setAttribute("deleteFailed", true);
-                response.sendRedirect("deleteUser");
+                request.getRequestDispatcher("/WEB-INF/jsp/view/deleteUser.jsp")
+                        .forward(request, response);
                 return;
             }
         }
