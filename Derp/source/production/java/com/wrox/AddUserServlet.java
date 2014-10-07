@@ -52,30 +52,32 @@ public class AddUserServlet extends HttpServlet
          **/
         if(request.getParameter("add") != null)
         {
-            String addUser = (String) request.getAttribute("usernameToAdd");
+            String addUser = request.getParameter("usernameToAdd");
             @SuppressWarnings("unchecked")
             Map<String, String> userDB = (Map<String, String>) session.getAttribute("database");
             @SuppressWarnings("unchecked")
             Map<String, String> currentUserFriends = (Map<String, String>) session.getAttribute("friends");
 
-            if(userDB.containsKey(addUser)){
-                request.setAttribute("addFailed", true);
-                request.setAttribute("addExist", false);
-                response.sendRedirect("addUser");
-                return;
-            }
-            else if (currentUserFriends.containsKey(addUser)){
-                request.setAttribute("addFailed", false);
-                request.setAttribute("addExist", true);
-                response.sendRedirect("addUser");
-                return;
-            }
-            else{
-                currentUserFriends.put(addUser, userDB.get(addUser));
-                request.setAttribute("addFailed", false);
-                request.setAttribute("addExist", false);
-                response.sendRedirect("derp");
-                return;
+            if(userDB != null) {
+                if(!userDB.containsKey(addUser)){
+                    request.setAttribute("addFailed", true);
+                    request.setAttribute("addExist", false);
+                    response.sendRedirect("addUser");
+                    return;
+                }
+                else if (currentUserFriends.containsKey(addUser)){
+                    request.setAttribute("addFailed", false);
+                    request.setAttribute("addExist", true);
+                    response.sendRedirect("addUser");
+                    return;
+                }
+                else{
+                    currentUserFriends.put(addUser, userDB.get(addUser));
+                    request.setAttribute("addFailed", false);
+                    request.setAttribute("addExist", false);
+                    response.sendRedirect("derp");
+                    return;
+                }
             }
         }
 
