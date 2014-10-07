@@ -17,20 +17,17 @@ import java.util.Map;
 )
 public class LoginServlet extends HttpServlet
 {
-    private static final Map<String, String> userDatabase = new Hashtable<>();
-    private Map<String, User> friends = new LinkedHashMap<>();
-
-    static {
-        userDatabase.put("Bernice", "password");
-        userDatabase.put("Gonchoi", "password");
-        userDatabase.put("gon", "gon");
-    }
+    private Map<String, String> userDatabase = new Hashtable<>();
+    private Map<String, String> friends = new Hashtable<>();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
         HttpSession session = request.getSession();
+        this.userDatabase = (Map<String, String>) session.getAttribute("database");
+        session.setAttribute("friends", this.friends);
+
         if(request.getParameter("logout") != null)
         {
             session.invalidate();
@@ -39,7 +36,7 @@ public class LoginServlet extends HttpServlet
         }
         else if(session.getAttribute("username") != null)
         {
-            response.sendRedirect("tickets");
+            response.sendRedirect("derp");
             return;
         }
 
@@ -59,17 +56,15 @@ public class LoginServlet extends HttpServlet
             return;
         }
 
-        if(session.getAttribute("username") != null)
-        {
-            response.sendRedirect("tickets");
-            return;
-        }
+        this.userDatabase = (Map<String, String>) session.getAttribute("database");
+        session.setAttribute("friends", this.friends);
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+
         if(username == null || password == null ||
-                !LoginServlet.userDatabase.containsKey(username) ||
-                !password.equals(LoginServlet.userDatabase.get(username)))
+                !this.userDatabase.containsKey(username) ||
+                !password.equals(this.userDatabase.get(username)))
         {
             request.setAttribute("loginFailed", true);
             request.getRequestDispatcher("/WEB-INF/jsp/view/login.jsp")
@@ -78,9 +73,12 @@ public class LoginServlet extends HttpServlet
         else
         {
             session.setAttribute("username", username);
-            session.setAttribute("database", userDatabase);
-            session.setAttribute("friends", friends);
             request.changeSessionId();
+
+            //TESTING
+            System.out.println("LOGIN::username: " + session.getAttribute("username"));
+            System.out.println("LOGIN::password: " + password);
+
             response.sendRedirect("derp");
         }
     }

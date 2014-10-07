@@ -15,17 +15,18 @@ import java.util.Map;
         urlPatterns = "/signup"
 )
 public class SignupServlet extends HttpServlet {
-    private static final Map<String, String> userDatabase = new Hashtable<>();
-
-    static {
-        userDatabase.put("Bernice", "password");
-        userDatabase.put("Gon", "password");
-        userDatabase.put("gon", "gon");
-    }
+    private Map<String, String> userDatabase = new Hashtable<>();
+    private Map<String, String> friends = new Hashtable<>();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        this.userDatabase = (Map<String, String>) session.getAttribute ("database");
+
+        session.setAttribute("database", this.userDatabase);
+        session.setAttribute("friends", this.friends);
+
         request.getRequestDispatcher("/WEB-INF/jsp/view/signup.jsp")
                 .forward(request, response);
     }
@@ -39,12 +40,23 @@ public class SignupServlet extends HttpServlet {
             return;
         }
 
+        this.userDatabase = (Map<String, String>) session.getAttribute ("database");
+        session.setAttribute("friends", this.friends);
+
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        if (username != null && password != null && !SignupServlet.userDatabase.containsKey(username)) {
-            userDatabase.put(username, password);
-            request.getRequestDispatcher("/WEB-INF/jsp/view/home.jsp")
-                    .forward(request, response);
+
+        if (username != null && password != null && !this.userDatabase.containsKey(username)) {
+            this.userDatabase.put(username, password);
+            session.setAttribute("database", this.userDatabase);
+            session.setAttribute("username", username);
+            request.changeSessionId();
+
+            //TESTING
+            System.out.println("SIGNUP::username: " + session.getAttribute("username"));
+            System.out.println("SIGNUP::password: " + password);
+
+            response.sendRedirect("derp");
         }
     }
 }

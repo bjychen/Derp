@@ -19,7 +19,7 @@
         </tr>
         <tr align="center">
             <th bgcolor="#6a5acd">
-                <a href="<c:url value="/login?logout" />"><font size="20" color="#00000">LOGIN</font></a>
+                <a href="<c:url value="/login" />"><font size="20" color="#00000">LOGIN</font></a>
             </th>
         </tr>
         <tr align="center">
@@ -30,9 +30,5 @@
             </th>
         </tr>
     </table>
-
-    <!--<br>
-    <a href="<c:url value="#" />"><font size="20">Find Friends</font></a><br>
-    <a href="<c:url value="#" />"><font size="20">+</font></a> -->
 </body>
 </html>
