@@ -19,13 +19,13 @@
     <b> Hello <%=(String) session.getAttribute("username")%></b><br>
     <%
         @SuppressWarnings("unchecked")
-        Map<Integer, User> friendsList = (LinkedHashMap) session.getAttribute("friends");
+        Map<String, String> friendsList = (Map<String, String>) session.getAttribute("friends");
         @SuppressWarnings("unchecked")
-        List<User> friends = new ArrayList<>(friendsList.values());
+        List<String> friends = (List<String>) friendsList.values();
 
-        for (User afriend : friends) { %>
-    <form method="POST" action="<c:url value="/derp?send=<%=afriend.getEmail()%>" />">
-        <input type="submit" value=<%=afriend.getUsername()%> /><br>
+        for (String afriend : friends) { %>
+    <form method="POST" action="<c:url value="/derp?send=<%=friendsList.get(afriend)%>" />">
+        <input type="submit" value=<%=afriend%> /><br>
     </form>
      <%  } %>
     <a href="<c:url value="/addUser" />">Add Friend</a><br>
