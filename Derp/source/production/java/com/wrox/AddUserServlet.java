@@ -62,13 +62,15 @@ public class AddUserServlet extends HttpServlet
                 if(!userDB.containsKey(addUser)){
                     request.setAttribute("addFailed", true);
                     request.setAttribute("addExist", false);
-                    response.sendRedirect("addUser");
+                    request.getRequestDispatcher("/WEB-INF/jsp/view/addUser.jsp")
+                            .forward(request, response);
                     return;
                 }
                 else if (currentUserFriends.containsKey(addUser)){
                     request.setAttribute("addFailed", false);
                     request.setAttribute("addExist", true);
-                    response.sendRedirect("addUser");
+                    request.getRequestDispatcher("/WEB-INF/jsp/view/addUser.jsp")
+                            .forward(request, response);
                     return;
                 }
                 else{
