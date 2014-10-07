@@ -19,10 +19,10 @@
         @SuppressWarnings("unchecked")
         Map<String, String> friendsList = (Map<String, String>) session.getAttribute("friends");
         @SuppressWarnings("unchecked")
-        List<String> friends = new ArrayList<>(friendsList.values());
+        List<String> friends = new ArrayList<>(friendsList.keySet());
 
         for (String afriend : friends) { %>
-    <form method="POST" action="<c:url value="/derp?send=<%=friendsList.get(afriend)%>" />">
+    <form method="POST" action="<c:url value="/derp?send=<%=afriend%>" />">
         <input type="submit" value=<%=afriend%> /><br>
     </form>
      <%  } %>
