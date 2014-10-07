@@ -27,6 +27,16 @@
     <%
         }
     %>
+    <%
+        if(((Boolean)request.getAttribute("sameUser")))
+        {
+    %>
+    <b>Silly Rabbit, you can't add yourself, Trix are for kids! <br>
+    Please try a different user.</b><br/><br/>
+    <%
+        }
+    %>
+
     <form method="POST" action="<c:url value="/addUser?add" />">
         Username: <br />
         <input type="email" name="usernameToAdd" /><br /><br />

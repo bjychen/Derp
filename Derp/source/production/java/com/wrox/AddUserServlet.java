@@ -23,12 +23,14 @@ public class AddUserServlet extends HttpServlet
         {
             request.setAttribute("addFailed", false);
             request.setAttribute("addExist", false);
+            request.setAttribute("sameUser", false);
             response.sendRedirect("derp");
             return;
         }
 
         request.setAttribute("addFailed", false);
         request.setAttribute("addExist", false);
+        request.setAttribute("sameUser", false);
         request.getRequestDispatcher("/WEB-INF/jsp/view/addUser.jsp")
                 .forward(request, response);
     }
@@ -43,6 +45,7 @@ public class AddUserServlet extends HttpServlet
         {
             request.setAttribute("addFailed", false);
             request.setAttribute("addExist", false);
+            request.setAttribute("sameUser", false);
             response.sendRedirect("derp");
             return;
         }
@@ -62,6 +65,7 @@ public class AddUserServlet extends HttpServlet
                 if(!userDB.containsKey(addUser)){
                     request.setAttribute("addFailed", true);
                     request.setAttribute("addExist", false);
+                    request.setAttribute("sameUser", false);
                     request.getRequestDispatcher("/WEB-INF/jsp/view/addUser.jsp")
                             .forward(request, response);
                     return;
@@ -69,14 +73,26 @@ public class AddUserServlet extends HttpServlet
                 else if (currentUserFriends.containsKey(addUser)){
                     request.setAttribute("addFailed", false);
                     request.setAttribute("addExist", true);
+                    request.setAttribute("sameUser", false);
+                    request.getRequestDispatcher("/WEB-INF/jsp/view/addUser.jsp")
+                            .forward(request, response);
+                    return;
+                }
+                else if (addUser.equals(session.getAttribute("username"))){
+                    request.setAttribute("addFailed", false);
+                    request.setAttribute("addExist", false);
+                    request.setAttribute("sameUser", true);
                     request.getRequestDispatcher("/WEB-INF/jsp/view/addUser.jsp")
                             .forward(request, response);
                     return;
                 }
                 else{
+                    System.out.println("AddUser::addUser: " + addUser);
+                    System.out.println("AddUser::username: " + session.getAttribute("username"));
                     currentUserFriends.put(addUser, userDB.get(addUser));
                     request.setAttribute("addFailed", false);
                     request.setAttribute("addExist", false);
+                    request.setAttribute("sameUser", false);
                     session.setAttribute("friends", currentUserFriends);
                     response.sendRedirect("derp");
                     return;
@@ -86,6 +102,7 @@ public class AddUserServlet extends HttpServlet
 
         request.setAttribute("addFailed", false);
         request.setAttribute("addExist", false);
+        request.setAttribute("sameUser", false);
         request.getRequestDispatcher("/WEB-INF/jsp/view/addUser.jsp")
                 .forward(request, response);
     }
