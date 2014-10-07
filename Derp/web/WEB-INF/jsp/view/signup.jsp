@@ -12,9 +12,18 @@
 </head>
 <body>
     <h2>Create an Account</h2>
+    <%
+        if(((Boolean)request.getAttribute("signupFailed")))
+        {
+    %>
+    <b>The username or password you entered are not valid values. Please try
+        again.</b><br /><br />
+    <%
+        }
+    %>
     <form method="POST" action="<c:url value="/signup" />">
         Username<br />
-        <input type="text" name="username" /><br /><br />
+        <input type="email" name="username" /><br /><br />
         Password<br />
         <input type="password" name="password" /><br /><br />
         <input type="submit" value="Sign Up" /><br /><br />

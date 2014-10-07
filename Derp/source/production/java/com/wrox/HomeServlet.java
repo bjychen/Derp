@@ -30,7 +30,7 @@ public class HomeServlet extends HttpServlet
         this.userDatabase.put("gon", "gon");
 
         HttpSession session = request.getSession();
-        session.setAttribute ("database", userDatabase);
+        session.setAttribute ("database", this.userDatabase);
 
         //TEST
         //System.out.println("HOME::password: " + ((Map<String, String>) session.getAttribute("database")).get("gon"));

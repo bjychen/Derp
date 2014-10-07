@@ -26,6 +26,12 @@ public class SignupServlet extends HttpServlet {
 
         session.setAttribute("database", this.userDatabase);
         session.setAttribute("friends", this.friends);
+        if(request.getParameter("cancel") != null)
+        {
+            response.sendRedirect("home");
+            return;
+        }
+        request.setAttribute("signupFailed", false);
 
         request.getRequestDispatcher("/WEB-INF/jsp/view/signup.jsp")
                 .forward(request, response);
@@ -35,7 +41,7 @@ public class SignupServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        if (session.getAttribute("cancel") != null) {
+        if (request.getParameter("cancel") != null) {
             response.sendRedirect("home");
             return;
         }
@@ -46,7 +52,7 @@ public class SignupServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        if (username != null && password != null && !this.userDatabase.containsKey(username)) {
+        if (username != "" && password != "" && !this.userDatabase.containsKey(username)) {
             this.userDatabase.put(username, password);
             session.setAttribute("database", this.userDatabase);
             session.setAttribute("username", username);
@@ -58,5 +64,12 @@ public class SignupServlet extends HttpServlet {
 
             response.sendRedirect("derp");
         }
+
+        else {
+            request.setAttribute("signupFailed", true);
+            request.getRequestDispatcher("/WEB-INF/jsp/view/signup.jsp")
+                    .forward(request, response);
+        }
+
     }
 }
