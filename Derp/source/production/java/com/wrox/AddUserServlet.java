@@ -85,7 +85,7 @@ public class AddUserServlet extends HttpServlet
                             .forward(request, response);
                     return;
                 }
-                else if (currentFriends.contains((String) session.getAttribute("username"))){
+                else if (currentFriends.contains(addUser)){
                     request.setAttribute("addFailed", false);
                     request.setAttribute("addExist", true);
                     request.setAttribute("sameUser", false);
