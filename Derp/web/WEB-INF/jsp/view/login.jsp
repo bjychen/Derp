@@ -17,7 +17,7 @@
         %>
         <form method="POST" action="<c:url value="/login" />">
             Username<br />
-            <input type="text" name="username" /><br /><br />
+            <input type="email" name="username" /><br /><br />
             Password<br />
             <input type="password" name="password" /><br /><br />
             <input type="submit" value="Log In" /><br /><br />
