@@ -29,6 +29,8 @@ public class HomeServlet extends HttpServlet
         this.userDatabase.put("billy@derp.com", "password");
         this.userDatabase.put("jill@derp.com", "password");
 
+        // ArrayList help from:
+        // http://www.mkyong.com/java/how-to-initialize-an-arraylist-in-one-line/
         this.friendList.put("bernice@derp.com", new ArrayList<String>(Arrays.asList("gon@derp.com", "john@derp.com")));
         this.friendList.put("gon@derp.com", new ArrayList<String>(Arrays.asList("bernice@derp.com", "jane@derp.com")));
         this.friendList.put("john@derp.com", new ArrayList<String>(Arrays.asList("gon@derp.com", "bernice@derp.com")));
