@@ -71,6 +71,11 @@ public class AddUserServlet extends HttpServlet
             @SuppressWarnings("unchecked")
             ArrayList<String> currentFriends = (ArrayList<String>) friendslist.get((String) session.getAttribute("username"));
 
+            if(currentFriends == null){
+                currentFriends = new ArrayList<>();
+                friendslist.put((String) session.getAttribute("username"), currentFriends);
+            }
+
             if(userDB != null) {
                 if(!userDB.containsKey(addUser)){
                     request.setAttribute("addFailed", true);
@@ -97,8 +102,6 @@ public class AddUserServlet extends HttpServlet
                     return;
                 }
                 else{
-                    //System.out.println("AddUser::addUser: " + addUser);
-                    //System.out.println("AddUser::username: " + session.getAttribute("username"));
                     currentFriends.add(addUser);
                     friendslist.replace((String) session.getAttribute("username"), currentFriends);
                     request.setAttribute("addFailed", false);

@@ -33,7 +33,6 @@ public class HomeServlet extends HttpServlet
         this.friendList.put("gon@derp.com", new ArrayList<String>(Arrays.asList("bernice@derp.com", "jane@derp.com")));
         this.friendList.put("john@derp.com", new ArrayList<String>(Arrays.asList("gon@derp.com", "bernice@derp.com")));
         this.friendList.put("jane@derp.com", new ArrayList<String>(Arrays.asList("john@derp.com", "gon@derp.com")));
-        this.friendList.put("bob@derp.com", new ArrayList<String>(Arrays.asList("jane@derp.com", "john@derp.com")));
         this.friendList.put("billy@derp.com", new ArrayList<String>(Arrays.asList("jill@derp.com", "jane@derp.com")));
         this.friendList.put("jill@derp.com", new ArrayList<String>(Arrays.asList("john@derp.com", "billy@derp.com")));
 
