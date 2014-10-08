@@ -5,8 +5,6 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import org.apache.commons.mail.*;
 
 @WebServlet(
@@ -20,10 +18,6 @@ import org.apache.commons.mail.*;
 )
 public class DerpServlet extends HttpServlet
 {
-
-    private volatile int USER_ID_SEQUENCE = 0;
-    private Map<String, String> currentUserFriends = new HashMap<>();
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
@@ -35,8 +29,12 @@ public class DerpServlet extends HttpServlet
             response.sendRedirect("home");
             return;
         }
+        if (session.getAttribute("username") == null) {
+            session.invalidate();
+            response.sendRedirect("home");
+            return;
+        }
 
-        session.setAttribute("friends", (Map<String, String>) session.getAttribute("friends"));
         request.getRequestDispatcher("/WEB-INF/jsp/view/derp.jsp")
                 .forward(request, response);
     }

@@ -25,12 +25,12 @@ public class LoginServlet extends HttpServlet
     {
         HttpSession session = request.getSession();
         this.userDatabase = (Map<String, String>) session.getAttribute("database");
-        session.setAttribute("friends", this.friends);
+        //session.setAttribute(request.getParameter("username") + "friends", this.friends);
 
         if(request.getParameter("logout") != null)
         {
             session.invalidate();
-            response.sendRedirect("login");
+            response.sendRedirect("home");
             return;
         }
         else if(session.getAttribute("username") != null)
@@ -56,13 +56,12 @@ public class LoginServlet extends HttpServlet
         HttpSession session = request.getSession();
         if(request.getParameter("cancel") != null)
         {
+            session.invalidate();
             response.sendRedirect("home");
             return;
         }
 
         this.userDatabase = (Map<String, String>) session.getAttribute("database");
-        session.setAttribute("friends", this.friends);
-
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
@@ -76,12 +75,16 @@ public class LoginServlet extends HttpServlet
         }
         else
         {
+
+            session.setAttribute(username + "friends", new Hashtable<String, String>());
+            //session.setAttribute(username + "friends", this.friends);
             session.setAttribute("username", username);
             request.changeSessionId();
+            request.setAttribute("loginFailed", false);
 
             //TESTING
-            System.out.println("LOGIN::username: " + session.getAttribute("username"));
-            System.out.println("LOGIN::password: " + password);
+            //System.out.println("LOGIN::username: " + session.getAttribute("username"));
+            //System.out.println("LOGIN::password: " + password);
 
             response.sendRedirect("derp");
         }

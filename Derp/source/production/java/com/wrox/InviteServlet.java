@@ -23,8 +23,14 @@ public class InviteServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
+        HttpSession session = request.getSession();
         if(request.getSession().getAttribute("username") == null)
         {
+            response.sendRedirect("home");
+            return;
+        }
+        if (session.getAttribute("username") == null) {
+            session.invalidate();
             response.sendRedirect("home");
             return;
         }

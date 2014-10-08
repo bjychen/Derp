@@ -17,15 +17,18 @@
     <b> Hello <%=(String) session.getAttribute("username")%></b><br>
     <%
         @SuppressWarnings("unchecked")
-        Map<String, String> friendsList = (Map<String, String>) session.getAttribute("friends");
-        @SuppressWarnings("unchecked")
-        List<String> friends = new ArrayList<>(friendsList.keySet());
-        for (String afriend : friends) {
-             String queryString = "/derp?send="+ afriend;   %>
-    <form method="POST" action="<c:url value="<%=queryString%>" />">
-        <input type="submit" value="<%=afriend%>" /><br>
-    </form>
-     <%  } %>
+        Map<String, String> friendsList = (Map<String, String>) session.getAttribute(session.getAttribute("username") + "friends");
+
+        if(friendsList != null) {
+            @SuppressWarnings("unchecked")
+            List<String> friends = new ArrayList<>(friendsList.keySet());
+            for (String afriend : friends) {
+                 String queryString = "/derp?send="+ afriend;   %>
+                <form method="POST" action="<c:url value="<%=queryString%>" />">
+                    <input type="submit" value="<%=afriend%>" /><br>
+                </form>
+     <%     }
+        }%>
     <a href="<c:url value="/addUser" />">Add Friend</a><br>
     <a href="<c:url value="/deleteUser" />">Delete Friends</a><br>
     <a href="<c:url value="/invite" />">Invite Friends</a><br>

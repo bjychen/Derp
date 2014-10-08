@@ -19,10 +19,16 @@ public class DeleteUserServlet extends HttpServlet
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
+        HttpSession session = request.getSession();
         if(request.getSession().getAttribute("username") == null)
         {
             request.setAttribute("deleteFailed", false);
             response.sendRedirect("derp");
+            return;
+        }
+        if (session.getAttribute("username") == null) {
+            session.invalidate();
+            response.sendRedirect("home");
             return;
         }
 
@@ -48,11 +54,11 @@ public class DeleteUserServlet extends HttpServlet
             String deleteUser = request.getParameter("usernameToDelete");
 
             @SuppressWarnings("unchecked")
-            Map<String, String> currentUserFriends = (Map<String, String>) session.getAttribute("friends");
+            Map<String, String> currentUserFriends = (Map<String, String>) session.getAttribute(session.getAttribute("username") + "friends");
 
             if (currentUserFriends.containsKey(deleteUser)) {
                 currentUserFriends.remove(deleteUser);
-                session.setAttribute("friends", currentUserFriends);
+                session.setAttribute(session.getAttribute("username") + "friends", currentUserFriends);
                 request.setAttribute("deleteFailed", false);
                 response.sendRedirect("derp");
                 return;

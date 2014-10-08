@@ -19,12 +19,18 @@ public class AddUserServlet extends HttpServlet
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
+        HttpSession session = request.getSession();
         if(request.getSession().getAttribute("username") == null)
         {
             request.setAttribute("addFailed", false);
             request.setAttribute("addExist", false);
             request.setAttribute("sameUser", false);
             response.sendRedirect("derp");
+            return;
+        }
+        if (session.getAttribute("username") == null) {
+            session.invalidate();
+            response.sendRedirect("home");
             return;
         }
 
@@ -59,7 +65,7 @@ public class AddUserServlet extends HttpServlet
             @SuppressWarnings("unchecked")
             Map<String, String> userDB = (Map<String, String>) session.getAttribute("database");
             @SuppressWarnings("unchecked")
-            Map<String, String> currentUserFriends = (Map<String, String>) session.getAttribute("friends");
+            Map<String, String> currentUserFriends = (Map<String, String>) session.getAttribute(session.getAttribute("username") + "friends");
 
             if(userDB != null) {
                 if(!userDB.containsKey(addUser)){
@@ -87,13 +93,13 @@ public class AddUserServlet extends HttpServlet
                     return;
                 }
                 else{
-                    System.out.println("AddUser::addUser: " + addUser);
-                    System.out.println("AddUser::username: " + session.getAttribute("username"));
+                    //System.out.println("AddUser::addUser: " + addUser);
+                    //System.out.println("AddUser::username: " + session.getAttribute("username"));
                     currentUserFriends.put(addUser, userDB.get(addUser));
                     request.setAttribute("addFailed", false);
                     request.setAttribute("addExist", false);
                     request.setAttribute("sameUser", false);
-                    session.setAttribute("friends", currentUserFriends);
+                    session.setAttribute(session.getAttribute("username") + "friends", currentUserFriends);
                     response.sendRedirect("derp");
                     return;
                 }
