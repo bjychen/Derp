@@ -57,9 +57,10 @@ public class DerpServlet extends HttpServlet
                 email.setMsg("YOU'VE BEEN DERPED! YOU'RE WELCOME! :-)");
                 email.addTo(request.getParameterValues("send"));
                 email.send();
-            } catch (Exception e) {
                 response.sendRedirect("derp");
+            } catch (Exception e) {
                 System.out.println(e);
+                response.sendRedirect("derp");
             }
         }
     }
