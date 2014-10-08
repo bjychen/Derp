@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @WebServlet(
@@ -54,11 +56,16 @@ public class DeleteUserServlet extends HttpServlet
             String deleteUser = request.getParameter("usernameToDelete");
 
             @SuppressWarnings("unchecked")
-            Map<String, String> currentUserFriends = (Map<String, String>) session.getAttribute(session.getAttribute("username") + "friends");
+            Map<String, String> userDB = (Map<String, String>) session.getAttribute("database");
+            @SuppressWarnings("unchecked")
+            Map<String, List> friendslist = (Map<String, List>) session.getAttribute("friends");
+            @SuppressWarnings("unchecked")
+            ArrayList<String> currentFriends = (ArrayList<String>) friendslist.get((String) session.getAttribute("username"));
 
-            if (currentUserFriends.containsKey(deleteUser)) {
-                currentUserFriends.remove(deleteUser);
-                session.setAttribute(session.getAttribute("username") + "friends", currentUserFriends);
+            if (currentFriends.contains(deleteUser)) {
+                currentFriends.remove(deleteUser);
+                friendslist.replace((String) session.getAttribute("username"), currentFriends);
+                session.setAttribute("friends", friendslist);
                 request.setAttribute("deleteFailed", false);
                 response.sendRedirect("derp");
                 return;

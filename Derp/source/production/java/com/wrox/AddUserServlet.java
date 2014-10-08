@@ -68,7 +68,8 @@ public class AddUserServlet extends HttpServlet
             Map<String, String> userDB = (Map<String, String>) session.getAttribute("database");
             @SuppressWarnings("unchecked")
             Map<String, List> friendslist = (Map<String, List>) session.getAttribute("friends");
-            ArrayList<String> currentFriends = (ArrayList<String>) friendslist.get(session.getAttribute("username"));
+            @SuppressWarnings("unchecked")
+            ArrayList<String> currentFriends = (ArrayList<String>) friendslist.get((String) session.getAttribute("username"));
 
             if(userDB != null) {
                 if(!userDB.containsKey(addUser)){

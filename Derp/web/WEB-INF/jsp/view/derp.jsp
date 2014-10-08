@@ -16,13 +16,15 @@
 <body>
     <b> Hello <%=(String) session.getAttribute("username")%></b><br>
     <%
+        ArrayList<String> currentFriends = new ArrayList<>();
         @SuppressWarnings("unchecked")
-        Map<String, String> friendsList = (Map<String, String>) session.getAttribute(session.getAttribute("username") + "friends");
+        Map<String, List> friendslist = (Map<String, List>) session.getAttribute("friends");
+        if(friendslist != null) {
+            currentFriends = (ArrayList<String>) friendslist.get((String) session.getAttribute("username"));
+        }
 
-        if(friendsList != null) {
-            @SuppressWarnings("unchecked")
-            List<String> friends = new ArrayList<>(friendsList.keySet());
-            for (String afriend : friends) {
+        if(currentFriends != null) {
+            for (String afriend : currentFriends) {
                  String queryString = "/derp?send="+ afriend;   %>
                 <form method="POST" action="<c:url value="<%=queryString%>" />">
                     <input type="submit" value="<%=afriend%>" /><br>
