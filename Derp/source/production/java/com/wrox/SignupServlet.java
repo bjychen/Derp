@@ -49,6 +49,7 @@ public class SignupServlet extends HttpServlet {
         }
 
         this.userDatabase = (Map<String, String>) session.getAttribute ("database");
+        this.friends = (Map<String, String>) session.getAttribute ("friends");
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
@@ -56,7 +57,7 @@ public class SignupServlet extends HttpServlet {
         if (username != "" && password != "" && !this.userDatabase.containsKey(username)) {
             this.userDatabase.put(username, password);
             session.setAttribute("database", this.userDatabase);
-            session.setAttribute(request.getParameter("username") + "friends", new Hashtable<String, String>());
+            //session.setAttribute(request.getParameter("username") + "friends", new Hashtable<String, String>());
             //session.setAttribute(request.getParameter("username") + "friends", this.friends);
             session.setAttribute("username", username);
             request.changeSessionId();

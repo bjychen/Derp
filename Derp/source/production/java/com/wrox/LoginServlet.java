@@ -25,6 +25,7 @@ public class LoginServlet extends HttpServlet
     {
         HttpSession session = request.getSession();
         this.userDatabase = (Map<String, String>) session.getAttribute("database");
+        this.friends = (Map<String, String>) session.getAttribute("friends");
         //session.setAttribute(request.getParameter("username") + "friends", this.friends);
 
         if(request.getParameter("logout") != null)
@@ -62,6 +63,7 @@ public class LoginServlet extends HttpServlet
         }
 
         this.userDatabase = (Map<String, String>) session.getAttribute("database");
+        this.friends = (Map<String, String>) session.getAttribute("friends");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
@@ -76,7 +78,7 @@ public class LoginServlet extends HttpServlet
         else
         {
 
-            session.setAttribute(username + "friends", new Hashtable<String, String>());
+            //session.setAttribute(username + "friends", new Hashtable<String, String>());
             //session.setAttribute(username + "friends", this.friends);
             session.setAttribute("username", username);
             request.changeSessionId();
